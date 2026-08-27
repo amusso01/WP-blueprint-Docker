@@ -32,6 +32,8 @@ docker compose down -v     # also delete the database volume
 
 `./scripts/up.sh` only affects **this folder**. It calls `docker compose up -d` here, then echoes the URLs from `.env`. Other projects are unchanged. Stop and down stay plain Compose commands.
 
+WordPress and WP-CLI images are named `wp-blueprint-wordpress:local` and `wp-blueprint-wpcli:local`, so every client project **reuses** the same built image (like `mysql:8.0.32`). The first `up` builds them; later `up` does not rebuild unless you pass `--build` (after a Dockerfile change). Caddy (`lucaslorentz/caddy-docker-proxy:alpine`) and Mailpit (`axllent/mailpit:latest`) are Hub images shared by every project — `test-caddy` in Docker Desktop is a **container**, not a second copy of the image. `pull_policy: missing` means Compose will not re-download those images if they are already on the Mac.
+
 Only one project can bind ports 80/443 at a time. Run `docker compose down` here before starting another site.
 
 WordPress core stays in a Docker volume. Your custom code and [`wordpress/wp-config.php`](wordpress/wp-config.php) are bind-mounted from this repo.

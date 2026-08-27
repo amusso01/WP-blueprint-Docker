@@ -23,7 +23,8 @@ x-wordpress-volumes: &wordpress-volumes
 
 services:
   caddy:
-    image: lucaslorentz/caddy-docker-proxy:2.9-alpine
+    image: lucaslorentz/caddy-docker-proxy:alpine
+    pull_policy: missing
     restart: unless-stopped
     ports:
       - "80:80"
@@ -34,6 +35,7 @@ services:
       - caddy_data:/data
 
   wordpress:
+    image: wp-blueprint-wordpress:local
     build:
       context: .
       dockerfile: docker/wordpress/Dockerfile
@@ -62,6 +64,7 @@ services:
 
   db:
     image: mysql:8.0.32
+    pull_policy: missing
     restart: unless-stopped
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
@@ -91,7 +94,8 @@ services:
       start_period: 20s
 
   mailpit:
-    image: axllent/mailpit:v1.27
+    image: axllent/mailpit:latest
+    pull_policy: missing
     restart: unless-stopped
     expose:
       - "1025"
@@ -102,6 +106,7 @@ services:
       caddy.tls: internal
 
   wpcli:
+    image: wp-blueprint-wpcli:local
     build:
       context: .
       dockerfile: docker/wpcli/Dockerfile
