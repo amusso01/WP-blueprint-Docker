@@ -14,18 +14,23 @@ Run `valet stop` before starting if Laravel Valet is still using ports 80 and 44
 4. `./scripts/add-host.sh` once per project name (needs `sudo`), or add these lines to `/etc/hosts` yourself:
    - `127.0.0.1 local.acme.dev`
    - `127.0.0.1 mail.local.acme.dev`
-5. `docker compose up -d` — first run builds images. Site: `https://local.acme.dev`. Mail: `https://mail.local.acme.dev`.
+5. `./scripts/up.sh` — starts the stack and prints the URLs. First run builds images. Same as `docker compose up -d`, plus:
+   - Site: `https://local.acme.dev`
+   - Mail: `https://mail.local.acme.dev`
 6. Once on this Mac: `./scripts/trust-caddy-ca.sh` (trusts local HTTPS in the browser).
 7. Finish the WordPress installer in the browser, then `./scripts/install-plugins.sh` (Query Monitor, ACF, Safe SVG).
 
 ## Everyday commands
 
 ```bash
-docker compose up -d       # start
+./scripts/up.sh            # start this project and print the site + Mailpit URLs
+docker compose up -d       # same start, without printing URLs
 docker compose stop        # pause
 docker compose down        # remove containers (database volume stays)
 docker compose down -v     # also delete the database volume
 ```
+
+`./scripts/up.sh` only affects **this folder**. It calls `docker compose up -d` here, then echoes the URLs from `.env`. Other projects are unchanged. Stop and down stay plain Compose commands.
 
 Only one project can bind ports 80/443 at a time. Run `docker compose down` here before starting another site.
 
