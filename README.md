@@ -14,7 +14,7 @@ Run `valet stop` before starting if Laravel Valet is still using ports 80 and 44
 4. `./scripts/add-host.sh` once per project name (needs `sudo`), or add these lines to `/etc/hosts` yourself:
    - `127.0.0.1 local.acme.dev`
    - `127.0.0.1 mail.local.acme.dev`
-5. `./scripts/up.sh` — starts the stack and prints the URLs. First run builds images. Same as `docker compose up -d`, plus:
+5. `./scripts/up.sh` — starts the stack and prints the URLs. First run builds images (`./scripts/up.sh --build` after Dockerfile changes). Same as `docker compose up -d`, plus:
    - Site: `https://local.acme.dev`
    - Mail: `https://mail.local.acme.dev`
 6. Once on this Mac: `./scripts/trust-caddy-ca.sh` (trusts local HTTPS in the browser).
@@ -102,6 +102,12 @@ After core is installed, `./scripts/install-plugins.sh` reads `config/plugins.tx
 - [Safe SVG](https://wordpress.org/plugins/safe-svg/)
 
 Those plugin folders are gitignored. Custom plugins under `wp-content/plugins` are still committed.
+
+## Default themes and bundled plugins
+
+Hello Dolly, Akismet, and all bundled Twenty* themes are removed when the WordPress image is built. Appearance → Themes stays empty until you drop your own theme into `wp-content/themes/`. That folder is bind-mounted, so the theme is on disk and committed with the project.
+
+The front end will error until a theme is present. After adding one, activate it in wp-admin or with `./scripts/wp theme activate your-theme-slug`.
 
 ## Layout
 

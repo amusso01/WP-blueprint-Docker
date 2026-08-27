@@ -6,6 +6,12 @@ RUN apt-get update \
     && touch /etc/msmtprc \
     && chmod 666 /etc/msmtprc
 
+# Drop Hello Dolly, Akismet, and all bundled Twenty* themes from the WordPress source tree.
+# Bind-mounted wp-content/themes would otherwise receive those copies on first start.
+RUN rm -f /usr/src/wordpress/wp-content/plugins/hello.php \
+    && rm -rf /usr/src/wordpress/wp-content/plugins/akismet \
+    && rm -rf /usr/src/wordpress/wp-content/themes/twenty*
+
 COPY docker/wordpress/entrypoint-smtp.sh /usr/local/bin/entrypoint-smtp.sh
 RUN chmod +x /usr/local/bin/entrypoint-smtp.sh
 
