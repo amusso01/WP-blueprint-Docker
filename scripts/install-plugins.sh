@@ -23,12 +23,12 @@ while IFS= read -r line || [[ -n "${line}" ]]; do
   slug="$(printf '%s' "${slug}" | tr -d '[:space:]')"
   [[ -z "${slug}" ]] && continue
 
-  if ./scripts/wp plugin is-installed "${slug}"; then
+  if ./scripts/wp plugin is-installed "${slug}" </dev/null; then
     echo "Already installed: ${slug}"
-    ./scripts/wp plugin activate "${slug}" >/dev/null
+    ./scripts/wp plugin activate "${slug}" </dev/null >/dev/null
   else
     echo "Installing ${slug}..."
-    ./scripts/wp plugin install "${slug}" --activate
+    ./scripts/wp plugin install "${slug}" --activate </dev/null
   fi
 done < "${plugins_file}"
 
