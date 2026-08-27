@@ -1,0 +1,24 @@
+name: wp-proxy
+
+services:
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:2.9-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      CADDY_INGRESS_NETWORKS: wp-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
+    networks:
+      - wp-proxy
+
+networks:
+  wp-proxy:
+    name: wp-proxy
+
+volumes:
+  caddy_data:

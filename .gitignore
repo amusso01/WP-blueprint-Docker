@@ -1,0 +1,10 @@
+.env
+.DS_Store
+Thumbs.db
+
+wp-content/uploads/*
+!wp-content/uploads/.gitkeep
+
+wp-content/plugins/query-monitor/
+wp-content/plugins/advanced-custom-fields/
+wp-content/plugins/safe-svg/

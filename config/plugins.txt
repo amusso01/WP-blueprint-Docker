@@ -1,0 +1,4 @@
+# wordpress.org slugs, one per line. Re-run ./scripts/install-plugins.sh after edits.
+query-monitor
+advanced-custom-fields
+safe-svg
