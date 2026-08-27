@@ -9,7 +9,7 @@ Run `valet stop` before starting if Laravel Valet is still using ports 80 and 44
 ## New project
 
 1. Copy this blueprint (GitHub **Use this template**, or copy the folder). Git at the project root.
-2. `cp .env.example .env` and set `PROJECT_NAME` and `COMPOSE_PROJECT_NAME` to the client slug (e.g. `acme`). Change `MYSQL_PORT` if 3306 is already in use.
+2. `cp .env.example .env` and set `PROJECT_NAME`, `COMPOSE_PROJECT_NAME`, and `WORDPRESS_TABLE_PREFIX` to the client slug (e.g. `acme` → `WORDPRESS_TABLE_PREFIX=acme_`). Change `MYSQL_PORT` if 3306 is already in use.
 3. `valet stop` if Valet is running.
 4. `./scripts/add-host.sh` once per project name (needs `sudo`), or add these lines to `/etc/hosts` yourself:
    - `127.0.0.1 local.acme.dev`
@@ -81,7 +81,9 @@ On a **new empty volume**, MySQL auto-imports `backups/wordpress.sql` if present
 
 [`wordpress/wp-config.php`](wordpress/wp-config.php) is bind-mounted to `/var/www/html/wp-config.php`. Edit it in Cursor; it persists on disk and is committed with the project.
 
-Database credentials come from `.env` (`getenv_docker`). Site URL is `https://local.PROJECT_NAME.dev`.
+Database credentials and the table prefix come from `.env` (`getenv_docker`). Site URL is `https://local.PROJECT_NAME.dev`.
+
+Set `WORDPRESS_TABLE_PREFIX` before the first install (e.g. `acme_`). Changing it later does **not** rename existing tables — wipe and reinstall (`docker compose down -v`, then `./scripts/up.sh` and the browser installer) if you already ran setup with a different prefix.
 
 For a new client, optionally replace the salt constants from [the WordPress secret-key service](https://api.wordpress.org/secret-key/1.1/salt/).
 

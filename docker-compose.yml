@@ -3,6 +3,7 @@ x-wordpress-environment: &wordpress-environment
   WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
   WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
   WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+  WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
   SMTP_HOST: mailpit
   SMTP_PORT: "1025"
   SMTP_USERNAME: ""

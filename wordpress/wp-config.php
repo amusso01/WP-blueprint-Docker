@@ -30,7 +30,7 @@ define('SECURE_AUTH_SALT', 'wJ0qT4mN7pH2kR8cF1vL5bY9dS3aG6eZ^i');
 define('LOGGED_IN_SALT',   'nF3bV6sK9mW1qP8tH0rJ4cD7yL2aX5eU&o');
 define('NONCE_SALT',       'kH7cP0nM4wQ2jT9vL5bF1dY8sA3eR6gZ*i');
 
-$table_prefix = 'wp_';
+$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
 
 define('WP_DEBUG', false);
 define('WP_DEBUG_LOG', false);
